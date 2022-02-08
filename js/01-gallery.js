@@ -12,7 +12,21 @@ const createdGallery = galleryItems.map(item =>
       alt="${item.description}"/>
   </a></div>`).join('');
 
-
 galleryRef.innerHTML = createdGallery;
+
+galleryRef.addEventListener('click', onImgClick);
+
+function onImgClick(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== "IMG") {
+    return
+  };
+   
+  const bigImgUrl = event.target.dataset.source;
+  const instance = basicLightbox.create(`
+    <img src=${bigImgUrl} width="800" height="600">
+`)
+  instance.show()
+};
 
 console.log(galleryItems);
