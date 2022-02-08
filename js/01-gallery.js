@@ -15,7 +15,7 @@ const createdGallery = galleryItems.map(item =>
 galleryRef.innerHTML = createdGallery;
 
 galleryRef.addEventListener('click', onImgClick);
-
+let instance;
 function onImgClick(event) {
   event.preventDefault();
   if (event.target.nodeName !== "IMG") {
@@ -23,10 +23,18 @@ function onImgClick(event) {
   };
    
   const bigImgUrl = event.target.dataset.source;
-  const instance = basicLightbox.create(`
-    <img src=${bigImgUrl} width="800" height="600">
+  instance = basicLightbox.create(`
+    <img src=${bigImgUrl}>
 `)
-  instance.show()
+  instance.show();
+  document.addEventListener('keydown', onEscClose);
 };
+function onEscClose (event) {
+  if (event.code === "Escape") {
+    instance.close();
+    document.removeEventListener('keydown', onEscClose);
+    console.log(event.code);
+  }
+}
 
 console.log(galleryItems);
