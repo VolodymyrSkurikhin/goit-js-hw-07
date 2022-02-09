@@ -25,9 +25,12 @@ function onImgClick(event) {
   const bigImgUrl = event.target.dataset.source;
   instance = basicLightbox.create(`
     <img src=${bigImgUrl}>
-`)
+`, {
+    onClose:()=>{ document.removeEventListener('keydown', onEscClose)}
+});
   instance.show();
   document.addEventListener('keydown', onEscClose);
+  
 };
 function onEscClose (event) {
   if (event.code === "Escape") {
